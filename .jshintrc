@@ -1,0 +1,12 @@
+{
+  "browser": true,
+  "esnext": true,
+  "globals": {
+    "module": true,
+    "require": true,
+    "console": true
+  },
+  "strict": "global",
+  "undef": true,
+  "unused": true
+}

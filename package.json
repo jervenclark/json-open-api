@@ -4,7 +4,8 @@
   "description": "Express middleware implementation of the OpenAPI v2.0 and JSON-API v1.0 specifications.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,11 @@
   "bugs": {
     "url": "https://github.com/jervenclark/json-open-api/issues"
   },
-  "homepage": "https://github.com/jervenclark/json-open-api#readme"
+  "homepage": "https://github.com/jervenclark/json-open-api#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.8",
+    "mongoose-hidden": "^0.6.3"
+  }
 }
