@@ -1,0 +1,37 @@
+{
+  "name": "open-json-api",
+  "version": "0.0.0",
+  "description": "Express middleware implementation of the OpenAPI v2.0 and JSON-API v1.0 specifications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jervenclark/open-json-api.git"
+  },
+  "keywords": [
+    "express",
+    "middleware",
+    "openapi",
+    "json-api",
+    "json",
+    "api",
+    "swagger",
+    "node",
+    "npm"
+  ],
+  "author": "Jerven Clark Chua <jervenclark@gmail.com> (http://jervenclarkchua.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jervenclark/open-json-api/issues"
+  },
+  "homepage": "https://github.com/jervenclark/open-json-api#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongoose": "^4.4.8",
+    "mongoose-hidden": "^0.6.3"
+  }
+}
