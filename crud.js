@@ -101,7 +101,7 @@ module.exports = function n(e) {
     function m(n, e) {
         var t = [];
         e.forEach(function(e) {
-            m.push(g(n, e));
+            t.push(g(n, e));
         });
         return t;
     }

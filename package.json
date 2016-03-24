@@ -1,6 +1,6 @@
 {
   "name": "open-json-api",
-  "version": "0.0.0",
+  "version": "0.0.11",
   "description": "Express middleware implementation of the OpenAPI v2.0 and JSON-API v1.0 specifications.",
   "main": "index.js",
   "scripts": {
