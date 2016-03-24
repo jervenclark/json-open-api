@@ -1,6 +1,6 @@
 "use strict";
 
-var express = require("express"), Crud = require("./crud"), rest = {
+var express = require("express"), bodyParser = require("body-parser"), Crud = require("./crud"), rest = {
     models: [],
     app: null,
     namespace: "",
@@ -36,6 +36,10 @@ function before(e, r, s) {
 
 function create() {
     if (rest.app) {
+        rest.app.use(bodyParser.urlencoded({
+            extended: true
+        }));
+        rest.app.use(bodyParser.json());
         rest.models.forEach(register);
     }
 }

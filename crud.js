@@ -1,117 +1,148 @@
 "use strict";
 
-module.exports = function n(e) {
-    this._model = e;
-    this._type = e.modelName.toLowerCase() + "s";
+module.exports = function e(n) {
+    this._model = n;
+    this._type = n.modelName.toLowerCase() + "s";
     var t = this;
     return {
         get: o,
-        post: s,
-        put: u,
-        patch: a,
+        post: a,
+        put: r,
+        patch: l,
         "delete": c
     };
-    function o(n, e, t) {
-        e.locals.response = {};
-        if (n.params.id) {
-            i(n, e, t);
+    function o(e, n, t) {
+        n.locals.response = {};
+        if (e.params.id) {
+            i(e, n, t);
         } else {
-            l(n, e, t);
+            s(e, n, t);
         }
     }
-    function i(n, e, o) {
-        t._model.findById(n.params.id, function(n, t) {
-            if (!n) {
-                e.locals.response.data = g(e, t);
+    function i(e, n, o) {
+        t._model.findById(e.params.id, function(e, t) {
+            if (!e) {
+                n.locals.response.data = y(n, t);
             }
             o();
         });
     }
-    function l(n, e, o) {
-        var i = r(n);
-        var l = f(n);
-        t._model.paginate(l, i).then(function(t) {
-            e.locals.response.links = p(n, e, t, i, l);
-            e.locals.response.data = m(e, t.docs);
+    function s(e, n, o) {
+        var i = f(e);
+        var s = p(e);
+        t._model.paginate(s, i).then(function(t) {
+            n.locals.response.links = d(e, n, t, i, s);
+            n.locals.response.data = g(n, t.docs);
             o();
-        }, function(n) {});
+        }, function(e) {});
     }
-    function s(n, e, o) {
-        t._model.find({}, function(n, e) {
-            console.log(n, e);
-            o();
-        });
-    }
-    function u(n, e, o) {
-        t._model.find({}, function(n, e) {
-            console.log(n, e);
-            o();
-        });
-    }
-    function a(n, e, o) {
-        t._model.find({}, function(n, e) {
-            console.log(n, e);
+    function a(e, n, o) {
+        n.locals.response = {};
+        var i = u(e.body);
+        var s = new t._model(i);
+        s.save(function(e, t) {
+            if (!e) {
+                n.locals.response.data = y(n, t);
+            }
             o();
         });
     }
-    function c(n, e, o) {
-        t._model.find({}, function(n, e) {
-            console.log(n, e);
-            o();
-        });
+    function r(e, n, t) {
+        n.locals.response = {};
+        t();
     }
-    function r(n) {
+    function l(e, n, o) {
+        n.locals.response = {};
+        if (e.params.id) {
+            var i = u(e.body);
+            t._model.findByIdAndUpdate(e.params.id, i, {
+                "new": true
+            }, function(e, t) {
+                if (!e) {
+                    n.locals.response.data = y(n, t);
+                }
+                o();
+            });
+        } else {
+            o();
+        }
+    }
+    function c(e, n, o) {
+        n.locals.response = {};
+        if (e.params.id) {
+            t._model.findByIdAndRemove(e.params.id, function(e, t) {
+                if (!e) {
+                    n.locals.response.data = {
+                        message: "ok"
+                    };
+                }
+                o();
+            });
+        } else {
+            o();
+        }
+    }
+    function u(e) {
+        var n = {};
+        Object.keys(t._model.schema.tree).forEach(function(t) {
+            if (e[t]) {
+                n[t] = e[t];
+            }
+        });
+        return n;
+    }
+    function f(e) {
         return {
-            page: n.query.page || 1,
-            limit: n.query.limit || 10,
+            page: e.query.page || 1,
+            limit: e.query.limit || 10,
             sort: {
                 id: "asc"
             }
         };
     }
-    function f(n) {
-        var e = {};
-        Object.keys(n.query).forEach(function(t) {
-            e[t] = n.query[t];
+    function p(e) {
+        var n = {};
+        Object.keys(e.query).forEach(function(t) {
+            n[t] = e.query[t];
         });
-        return e;
+        return n;
     }
-    function p(n, e, t, o, i) {
-        var l = [], s = {}, u = e.locals.url + "?" + encodeURI(l);
-        Object.keys(i).forEach(function(n) {
-            l.push(n + "=" + i[n]);
+    function d(e, n, t, o, i) {
+        var s = [], a = {}, r = n.locals.url + "?" + encodeURI(s);
+        Object.keys(i).forEach(function(e) {
+            s.push(e + "=" + i[e]);
         });
-        l = l.join("&");
+        s = s.join("&");
         if (t.total > 0) {
-            s.self = d(u, o.page, o.limit, l);
+            a.self = m(r, o.page, o.limit, s);
         }
         if (t.page < t.pages) {
-            s.next = d(u, Number(t.page) + 1, o.limit, l);
-            s.last = d(u, t.pages, o.limit, l);
+            a.next = m(r, Number(t.page) + 1, o.limit, s);
+            a.last = m(r, t.pages, o.limit, s);
         }
         if (t.page > 1 && t.page <= t.pages) {
-            s.first = d(u, 1, o.limit, l);
-            s.prev = d(u, Number(t.page) - 1, o.limit, l);
+            a.first = m(r, 1, o.limit, s);
+            a.prev = m(r, Number(t.page) - 1, o.limit, s);
         }
-        return s;
+        return a;
     }
-    function d(n, e, t, o) {
-        return [ n, "&page=", e, "&limit=", t, "&", o ].join("");
+    function m(e, n, t, o) {
+        return [ e, "&page=", n, "&limit=", t, "&", o ].join("");
     }
-    function m(n, e) {
+    function g(e, n) {
         var t = [];
-        e.forEach(function(e) {
-            t.push(g(n, e));
+        n.forEach(function(n) {
+            t.push(y(e, n));
         });
         return t;
     }
-    function g(n, e) {
+    function y(e, n) {
         return {
             type: t._type,
-            id: e.id,
-            attributes: e.toJSON(),
+            id: n.id,
+            attributes: n.toJSON(),
             links: {
-                self: n.locals.url + "/" + e.id
+                self: e.locals.url + "/" + n.id
             }
         };
     }
